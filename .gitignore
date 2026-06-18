@@ -1,0 +1,42 @@
+# Unity / Tuanjie Engine generated folders
+Library/
+Temp/
+Obj/
+Build/
+Builds/
+Logs/
+UserSettings/
+
+# Unity memory files
+*.pidb
+*.svd
+*.pdb
+*.mdb
+
+# Unity meta files (keep them for proper asset referencing in version control)
+# *.meta  — actually we SHOULD keep .meta files for assets
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vs/
+.idea/
+.codely-cli/
+*.swp
+*.swo
+*~
+
+# Build outputs
+*.apk
+*.aab
+*.app
+*.exe
+*.dll
+
+# NuGet / packages
+packages/
+
+# Tuanjie specific
+.tuanjie/
