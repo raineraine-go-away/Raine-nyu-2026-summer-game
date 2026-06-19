@@ -1,11 +1,10 @@
 {
-  "unity_port": 52104,
+  "unity_port": -1,
   "stream_port": 0,
   "created_date": "2026-06-16T03:55:29.7036490Z",
   "project_path": "/Users/raine/Desktop/newnewtao/Assets",
   "reloading": false,
-  "reason": "ready",
+  "reason": "stopped",
   "seq": 1,
-  "last_heartbeat": "2026-06-18T07:00:53.4395530Z"
-  "last_heartbeat": "2026-06-18T07:01:16.5651580Z"
+  "last_heartbeat": "2026-06-18T14:57:30.3368310Z"
 }
