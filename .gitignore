@@ -40,3 +40,6 @@ packages/
 
 # Tuanjie specific
 .tuanjie/
+
+# Mono crash dumps
+mono_crash.mem.*

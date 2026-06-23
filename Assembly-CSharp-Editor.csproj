@@ -471,7 +471,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Codely.Newtonsoft.Json">
-      <HintPath>Library/PackageCache/cn.tuanjie.codely.bridge@1.0.60/Plugins/Codely.Newtonsoft.Json.dll</HintPath>
+      <HintPath>Library/PackageCache/cn.tuanjie.codely.bridge@1.0.63/Plugins/Codely.Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.VisualScripting.TextureAssets">

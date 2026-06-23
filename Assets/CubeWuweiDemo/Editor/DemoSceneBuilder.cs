@@ -15,8 +15,12 @@ namespace CubeWuweiDemo.Editor
         {
             EditorApplication.delayCall += () =>
             {
-                EnsureDemoInBuildSettings();
-                OpenAndRepairDemoScene();
+                // 只在非 Play Mode 时修复场景
+                if (!EditorApplication.isPlayingOrWillChangePlaymode)
+                {
+                    EnsureDemoInBuildSettings();
+                    OpenAndRepairDemoScene();
+                }
             };
         }
 
@@ -37,6 +41,10 @@ namespace CubeWuweiDemo.Editor
         [MenuItem("Cube Wuwei Demo/Open Playable Demo Scene")]
         public static void OpenAndRepairDemoScene()
         {
+            // Play Mode 下禁止执行
+            if (EditorApplication.isPlaying || EditorApplication.isPlayingOrWillChangePlaymode)
+                return;
+
             var scene = EditorSceneManager.GetActiveScene();
             if (scene.path != DemoScenePath)
             {

@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>归位 · Guiwei — A Room of Order and Absurdity</title>
+<style>
+  /* ── Reset & Base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-dark: #0a0a0c;
+    --bg-card: #161619;
+    --bg-card-hover: #1e1e23;
+    --accent-gold: #d4c089;
+    --accent-warm: #c4a06a;
+    --accent-red: #8a3020;
+    --accent-blue: #304878;
+    --accent-wood: #6a4a2a;
+    --text-light: #e8dcc8;
+    --text-muted: #9a9080;
+    --text-muted-en: #7a7a8a;
+    --text-dim: #5a5a60;
+    --border: #2a2a30;
+    --border-light: #3a3a40;
+    --font-zh: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+    --font-en: 'Crimson Text', 'Georgia', serif;
+    --font-ui: 'Inter', 'Helvetica Neue', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg-dark);
+    color: var(--text-light);
+    font-family: var(--font-en);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── Language Toggle ── */
+  .lang-toggle {
+    position: fixed; top: 1.2rem; right: 1.5rem; z-index: 100;
+    display: flex; gap: 0.5rem;
+  }
+  .lang-toggle button {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 0.35rem 0.75rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+  }
+  .lang-toggle button.active {
+    background: var(--accent-gold);
+    color: var(--bg-dark);
+    border-color: var(--accent-gold);
+  }
+  .lang-toggle button:hover { border-color: var(--accent-warm); }
+
+  /* ── Navigation ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 90;
+    background: rgba(10,10,12,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.8rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  nav .logo {
+    font-family: var(--font-zh);
+    color: var(--accent-gold);
+    font-size: 1.1rem;
+    letter-spacing: 0.15em;
+  }
+  nav .nav-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+  nav .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    transition: color 0.2s;
+  }
+  nav .nav-links a:hover { color: var(--accent-gold); }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+    background: radial-gradient(ellipse at 50% 40%, rgba(106,74,42,0.12) 0%, transparent 60%);
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url('art/东-佛龛1.png') center/cover no-repeat;
+    opacity: 0.06;
+    filter: blur(2px) saturate(0.5);
+  }
+  .hero-title-zh {
+    font-family: var(--font-zh);
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    color: var(--accent-gold);
+    letter-spacing: 0.3em;
+    margin-bottom: 0.3rem;
+    line-height: 1.2;
+  }
+  .hero-title-en {
+    font-family: var(--font-en);
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-subtitle {
+    font-family: var(--font-zh);
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 500px;
+    line-height: 1.8;
+  }
+  .hero-subtitle-en {
+    font-family: var(--font-en);
+    font-size: 0.95rem;
+    color: var(--text-muted-en);
+    margin-top: 0.5rem;
+    max-width: 500px;
+  }
+
+  /* ── Sections ── */
+  .section {
+    padding: 5rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-divider {
+    width: 60px; height: 2px;
+    background: var(--accent-gold);
+    margin: 0 auto 3rem;
+    opacity: 0.6;
+  }
+  .section-title-zh {
+    font-family: var(--font-zh);
+    font-size: 2rem;
+    color: var(--accent-gold);
+    text-align: center;
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.2em;
+  }
+  .section-title-en {
+    font-family: var(--font-en);
+    font-size: 1rem;
+    color: var(--text-muted-en);
+    text-align: center;
+    margin-bottom: 2rem;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── Cards ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.8rem;
+    transition: all 0.25s;
+  }
+  .card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-light);
+    transform: translateY(-2px);
+  }
+  .card-label {
+    font-family: var(--font-ui);
+    font-size: 0.7rem;
+    color: var(--accent-warm);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .card-title-zh {
+    font-family: var(--font-zh);
+    font-size: 1.3rem;
+    color: var(--text-light);
+    margin-bottom: 0.2rem;
+  }
+  .card-title-en {
+    font-family: var(--font-en);
+    font-size: 0.85rem;
+    color: var(--text-muted-en);
+    margin-bottom: 1rem;
+  }
+  .card-body-zh {
+    font-family: var(--font-zh);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+  .card-body-en {
+    font-family: var(--font-en);
+    font-size: 0.85rem;
+    color: var(--text-muted-en);
+    line-height: 1.7;
+    margin-top: 0.5rem;
+  }
+
+  /* ── Wall Art Gallery ── */
+  .wall-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .wall-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: all 0.25s;
+  }
+  .wall-item:hover {
+    border-color: var(--accent-warm);
+    transform: translateY(-3px);
+  }
+  .wall-item img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.85) contrast(1.05);
+  }
+  .wall-item .wall-label {
+    padding: 0.6rem 0.8rem;
+    text-align: center;
+  }
+  .wall-item .wall-label-zh {
+    font-family: var(--font-zh);
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  .wall-item .wall-label-en {
+    font-family: var(--font-en);
+    font-size: 0.7rem;
+    color: var(--text-muted-en);
+  }
+
+  /* ── Five Elements Diagram ── */
+  .elements-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+    margin: 2rem auto;
+    max-width: 700px;
+  }
+  .elements-ring {
+    position: relative;
+    width: 340px; height: 340px;
+  }
+  .element-node {
+    position: absolute;
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-family: var(--font-zh);
+    font-size: 1.1rem;
+    border: 2px solid;
+    transition: transform 0.2s;
+  }
+  .element-node:hover { transform: scale(1.12); }
+  .element-node .el-zh { font-size: 1rem; line-height: 1.2; }
+  .element-node .el-en { font-family: var(--font-ui); font-size: 0.5rem; letter-spacing: 0.05em; color: inherit; opacity: 0.6; }
+
+  .el-wood   { background: rgba(106,74,42,0.2);  border-color: #6a4a2a; color: #c4a06a; top: 0;   left: 135px; }
+  .el-fire   { background: rgba(138,48,32,0.2);  border-color: #8a3020; color: #d45030; top: 90px; left: 270px; }
+  .el-earth  { background: rgba(90,80,50,0.2);   border-color: #705030; color: #a08050; top: 200px; left: 200px; }
+  .el-metal  { background: rgba(160,160,180,0.15); border-color: #8a8a90; color: #b0b0c0; top: 200px; left: 70px; }
+  .el-water  { background: rgba(48,72,120,0.2);  border-color: #304878; color: #5080b0; top: 90px;  left: 0; }
+
+  .elements-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: rgba(212,192,137,0.1);
+    border: 1px solid var(--accent-gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-zh);
+    font-size: 0.9rem;
+    color: var(--accent-gold);
+  }
+
+  /* ── Playable Game Embed ── */
+  .playable-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+  }
+  .playable-box video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 7px;
+  }
+  .playable-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(18,14,10,0.85));
+    padding: 1.2rem 1rem 0.8rem;
+    text-align: center;
+  }
+  .playable-label-zh {
+    font-family: var(--font-zh);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+  .playable-label-en {
+    font-family: var(--font-en);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 0.2rem;
+  }
+
+  /* ── Timeline ── */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+    margin-top: 2rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 0.8rem; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--accent-gold);
+    opacity: 0.3;
+  }
+  .timeline-item {
+    position: relative;
+    padding-bottom: 2rem;
+    padding-left: 1.5rem;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute; left: -1.2rem; top: 0.3rem;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent-warm);
+    border: 2px solid var(--bg-dark);
+  }
+  .timeline-date {
+    font-family: var(--font-ui);
+    font-size: 0.7rem;
+    color: var(--accent-warm);
+    letter-spacing: 0.08em;
+  }
+  .timeline-title-zh {
+    font-family: var(--font-zh);
+    font-size: 1rem;
+    color: var(--text-light);
+    margin-top: 0.2rem;
+  }
+  .timeline-title-en {
+    font-family: var(--font-en);
+    font-size: 0.8rem;
+    color: var(--text-muted-en);
+    margin-bottom: 0.4rem;
+  }
+  .timeline-body {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .timeline-body-en {
+    font-family: var(--font-en);
+    font-size: 0.8rem;
+    color: var(--text-muted-en);
+    line-height: 1.6;
+    margin-top: 0.4rem;
+  }
+  .timeline-tag {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: 0.6rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--accent-warm);
+    letter-spacing: 0.05em;
+    margin-right: 0.4rem;
+  }
+
+  /* ── Sound Design ── */
+  .sound-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.2rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .sound-icon {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: rgba(212,192,137,0.08);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    color: var(--accent-warm);
+  }
+  .sound-info .sound-name-zh { font-family: var(--font-zh); font-size: 0.9rem; color: var(--text-light); }
+  .sound-info .sound-name-en { font-family: var(--font-ui); font-size: 0.7rem; color: var(--text-muted-en); }
+  .sound-info .sound-desc { font-family: var(--font-en); font-size: 0.75rem; color: var(--text-dim); margin-top: 0.3rem; }
+
+  /* ── Footer ── */
+  footer {
+    padding: 2rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+  }
+  footer p {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+  }
+  footer .footer-zh { font-family: var(--font-zh); }
+  footer .footer-en { font-family: var(--font-en); }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    nav .nav-links { gap: 1rem; font-size: 0.7rem; }
+    .section { padding: 3rem 1.2rem; }
+    .hero { padding: 5rem 1.5rem 3rem; }
+    .card-grid { grid-template-columns: 1fr; }
+    .wall-gallery { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+    .elements-ring { width: 260px; height: 260px; }
+    .element-node { width: 50px; height: 50px; }
+    .el-wood   { top: 0;   left: 105px; }
+    .el-fire   { top: 65px; left: 210px; }
+    .el-earth  { top: 155px; left: 155px; }
+    .el-metal  { top: 155px; left: 55px; }
+    .el-water  { top: 65px;  left: 0; }
+    .lang-toggle { top: 0.8rem; right: 1rem; }
+  }
+
+  /* ── Bilingual Hide/Show ── */
+  .zh-text, .en-text { transition: opacity 0.3s; }
+  body.lang-zh .en-text { opacity: 0.5; }
+  body.lang-en .zh-text { opacity: 0.5; }
+  body.lang-zh .en-only { display: none; }
+  body.lang-en .zh-only { display: none; }
+
+  /* ── Scroll Fade-in ── */
+  .fade-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body class="lang-zh">
+
+<!-- Language Toggle -->
+<div class="lang-toggle">
+  <button id="btnZh" class="active">中文</button>
+  <button id="btnEn">EN</button>
+</div>
+
+<!-- Navigation -->
+<nav>
+  <div class="logo">归位</div>
+  <ul class="nav-links">
+    <li><a href="#game">Game / 游戏</a></li>
+    <li><a href="#designs">Designs / 设计</a></li>
+    <li><a href="#world">World / 世界</a></li>
+    <li><a href="#dev">Development / 开发</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero" id="top">
+  <div class="hero-title-zh zh-text">归 位</div>
+  <div class="hero-title-en en-text">GUIWEI — A Room of Order and Absurdity</div>
+  <div class="hero-subtitle zh-text">
+    五行有序，镜龛相冲，万物皆有其位。<br>
+    恐怖不在黑暗中，在秩序的缝隙里。
+  </div>
+  <div class="hero-subtitle-en en-text">
+    The five elements are in order. The mirror faces the shrine. Everything has its place.<br>
+    Horror lives not in darkness, but in the cracks of order.
+  </div>
+</section>
+
+<!-- ═══════════════ GAME ═══════════════ -->
+<section class="section fade-section" id="game">
+  <div class="section-divider"></div>
+  <div class="section-title-zh zh-text">游戏</div>
+  <div class="section-title-en en-text">GAME</div>
+
+  <div class="card-grid">
+    <!-- Inspiration -->
+    <div class="card">
+      <div class="card-label zh-only">灵感</div><div class="card-label en-only">INSPIRATION</div>
+      <div class="card-title-zh zh-text">事情都不在它该在的地方</div>
+      <div class="card-title-en en-text">Nothing Is Where It Should Be</div>
+      <div class="card-body-zh zh-text">
+        一间看起来秩序井然的房间——五行各占一面墙，方位分明。但佛像藏在镜子里，香灰本该喂鱼，打火机遗落在书桌上。越是按照"规则"行事，越觉得荒谬。恐怖不在黑暗中，而在秩序的缝隙里。
+      </div>
+      <div class="card-body-en en-text">
+        A room that looks orderly — each element on its wall, directions clear. But the Buddha is hidden inside a mirror, incense ash belongs in the fish tank, the lighter sits forgotten on a desk. The more you follow the "rules," the more absurd it feels. Horror hides not in darkness, but in the cracks of order.
+      </div>
+    </div>
+
+    <!-- Concepts -->
+    <div class="card">
+      <div class="card-label zh-only">概念</div><div class="card-label en-only">CONCEPTS</div>
+      <div class="card-title-zh zh-text">五行·归位·民俗恐怖</div>
+      <div class="card-title-en en-text">Five Elements · Restoration · Folk Horror</div>
+      <div class="card-body-zh zh-text">
+        一个中式审美的密室空间，四面墙和一面地板分别对应木火金水土。看似完美的五行排列，实则佛像错位、风水冲突、角落里闪过不该出现的影子。玩家需要把所有东西归位——砸碎镜子取出佛像、把佛像放回佛龛、喂香灰给鱼、点燃香炉——直到房间恢复它该有的样子。
+      </div>
+      <div class="card-body-en en-text">
+        A Chinese-aesthetic escape room. Four walls and one floor map to Wood, Fire, Metal, Water, Earth. A seemingly perfect five-element arrangement, but the Buddha is misplaced, feng shui is broken, and shadows flash where they shouldn't. The player must restore everything — smash the mirror to retrieve the Buddha, return it to the shrine, feed ash to the fish, light the incense — until the room becomes what it was meant to be.
+      </div>
+    </div>
+
+    <!-- Playable -->
+    <div class="card playable-box">
+      <video controls playsinline preload="metadata" poster="">
+        <source src="guiwei-demo.mp4" type="video/mp4">
+      </video>
+      <div class="playable-overlay">
+        <div class="playable-label-zh zh-text">游戏录屏演示</div>
+        <div class="playable-label-en en-text">Gameplay Demo Recording</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ DESIGNS ═══════════════ -->
+<section class="section fade-section" id="designs">
+  <div class="section-divider"></div>
+  <div class="section-title-zh zh-text">设计</div>
+  <div class="section-title-en en-text">DESIGNS</div>
+
+  <div class="card-grid">
+    <!-- Life Experience -->
+    <div class="card">
+      <div class="card-label zh-only">生活经验</div><div class="card-label en-only">LIFE EXPERIENCE</div>
+      <div class="card-title-zh zh-text">一切都不太对</div>
+      <div class="card-title-en en-text">Nothing Is Quite Right</div>
+      <div class="card-body-zh zh-text">
+        生活里有时就是这样——所有东西看起来都在，但总觉得不对。佛像在镜子里，打火机在书桌上，香灰散落地面。不是缺了什么，是位置错了。归位比寻找更难。
+      </div>
+      <div class="card-body-en en-text">
+        Sometimes life feels exactly like this — everything seems present, but something is off. The Buddha is inside the mirror, the lighter sits on the desk, incense ash lies scattered on the ground. It's not that something is missing — it's that things are out of place. Restoration is harder than discovery.
+      </div>
+    </div>
+
+    <!-- Core Emotion -->
+    <div class="card">
+      <div class="card-label zh-only">核心情感</div><div class="card-label en-only">CORE EMOTION</div>
+      <div class="card-title-zh zh-text">在秩序的缝隙里感到不安</div>
+      <div class="card-title-en en-text">Unease in the Cracks of Order</div>
+      <div class="card-body-zh zh-text">
+        房间看似井然有序，但佛像藏在镜子里、角落闪过不该出现的影子、风水暗中冲突。恐怖不在黑暗中，在秩序的缝隙里。游戏从秩序走向荒谬，从荒谬走向恐怖，最终在归位中找到安宁。
+      </div>
+      <div class="card-body-en en-text">
+        The room appears orderly, but the Buddha hides inside a mirror, shadows flash where they shouldn't, feng shui secretly clashes. Horror lives not in darkness, but in the cracks of order. The game moves from order → absurdity → horror → peace through restoration.
+      </div>
+    </div>
+
+    <!-- Core Mechanics -->
+    <div class="card">
+      <div class="card-label zh-only">核心机制</div><div class="card-label en-only">CORE MECHANICS</div>
+      <div class="card-title-zh zh-text">五行归位密室探索</div>
+      <div class="card-title-en en-text">Five-Element Restoration Room Exploration</div>
+      <div class="card-body-zh zh-text">
+        玩家与四面墙和一面地板交互（金木水火土），发现道具，然后主动打破错误、把一切归位：砸碎镜子取出佛像 → 放回佛龛 → 喂香灰给鱼 → 点香炉 → 占卜问卦。房间不是被"等待"打开的，是被"修复"后才允许离开的。
+      </div>
+      <div class="card-body-en en-text">
+        Players interact with 4 walls and 1 floor (Metal, Wood, Water, Fire, Earth), discover items, then actively break what's wrong and restore what's misplaced: smash mirror → retrieve Buddha → return to shrine → feed ash to fish → light incense → divine with cup. The room opens not by waiting, but by being restored.
+      </div>
+    </div>
+
+    <!-- Phase Graph -->
+    <div class="card">
+      <div class="card-label zh-only">阶段图</div><div class="card-label en-only">PHASE GRAPH</div>
+      <div class="card-title-zh zh-text">四阶段：秩序 → 荒谬 → 恐怖 → 安宁</div>
+      <div class="card-title-en en-text">Four Phases: Order → Absurdity → Horror → Peace</div>
+      <div class="card-body-zh zh-text" style="text-align:center; font-size:1rem; letter-spacing:0.1em; line-height:2.5;">
+        发现错位 → <span style="color:var(--accent-gold)">打破错误</span> → 归位修复 → <span style="color:var(--text-muted-en)">安宁</span>
+      </div>
+      <div class="card-body-en en-text" style="text-align:center; font-size:0.9rem; letter-spacing:0.05em; line-height:2.5;">
+        Find Misplacement → <span style="color:var(--accent-gold)">Break What's Wrong</span> → Restore to Place → <span style="color:var(--text-muted-en)">Peace</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Five Elements Diagram -->
+  <div class="elements-diagram">
+    <div class="elements-ring">
+      <div class="element-node el-wood"><span class="el-zh">木</span><span class="el-en">WOOD</span></div>
+      <div class="element-node el-fire"><span class="el-zh">火</span><span class="el-en">FIRE</span></div>
+      <div class="element-node el-earth"><span class="el-zh">土</span><span class="el-en">EARTH</span></div>
+      <div class="element-node el-metal"><span class="el-zh">金</span><span class="el-en">METAL</span></div>
+      <div class="element-node el-water"><span class="el-zh">水</span><span class="el-en">WATER</span></div>
+      <div class="elements-center zh-text">克</div>
+      <div class="elements-center en-text" style="display:none;">CLASH</div>
+    </div>
+  </div>
+
+  <!-- Wall Mapping -->
+  <div class="card-grid" style="margin-top:2rem;">
+    <div class="card" style="text-align:center;">
+      <div class="card-body-zh zh-text" style="font-size:0.85rem;">
+        东·木 → 佛龛<br>南·火 → 屏风书桌<br>西·金 → 梳妆台镜子<br>北·水 → 鱼缸<br>地·土 → 八卦盘
+      </div>
+      <div class="card-body-en en-text" style="font-size:0.8rem;">
+        East·Wood → Shrine<br>South·Fire → Screen & Desk<br>West·Metal → Vanity & Mirror<br>North·Water → Fish Tank<br>Floor·Earth → Bagua Plate
+      </div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="card-label zh-only">风水冲突</div><div class="card-label en-only">FENG SHUI CLASH</div>
+      <div class="card-title-zh zh-text">镜子对着佛龛</div>
+      <div class="card-title-en en-text">Mirror Facing the Shrine</div>
+      <div class="card-body-zh zh-text">
+        看似完美的五行安排，其实从你站的位置就已经暗中冲突了。镜子对着佛龛——这不该出现在一个有序的空间里。荒谬就在秩序的表面之下。
+      </div>
+      <div class="card-body-en en-text">
+        A seemingly perfect five-element arrangement already harbors a hidden conflict from where you stand. The mirror faces the shrine — something that shouldn't exist in an orderly space. Absurdity lurks just beneath the surface of order.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ WORLD ═══════════════ -->
+<section class="section fade-section" id="world">
+  <div class="section-divider"></div>
+  <div class="section-title-zh zh-text">游戏世界</div>
+  <div class="section-title-en en-text">GAME WORLD</div>
+
+  <!-- Visual/Audio -->
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-label zh-only">美术风格</div><div class="card-label en-only">VISUAL STYLE</div>
+      <div class="card-title-zh zh-text">中式手绘密室</div>
+      <div class="card-title-en en-text">Chinese-Hand-Drawn Chamber</div>
+      <div class="card-body-zh zh-text">
+        所有墙面和道具均为手绘美术，色调深沉温暖，笔触带有中国传统绘画质感。每面墙都有多张状态图（如镜子碎裂四阶段、佛龛点燃前后、鱼缸喂鱼变色等）。
+      </div>
+      <div class="card-body-en en-text">
+        All walls and props are hand-drawn art with deep warm tones and traditional Chinese brushwork texture. Each wall has multiple state images (mirror shattering in 4 stages, shrine before/after lighting, fish tank color shift, etc.).
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label zh-only">声音设计</div><div class="card-label en-only">AUDIO DESIGN</div>
+      <div class="card-title-zh zh-text">低频回响 + 真实采样</div>
+      <div class="card-title-en en-text">Low-Frequency Echo + Real Samples</div>
+      <div class="card-body-zh zh-text">
+        道具拾取：55Hz深沉回响。环境查看：220Hz+330Hz泛音和弦。玻璃碎裂：真实玻璃碎裂采样。拿走佛像：55Hz低频+不和谐泛音+多层延迟回响的怪异嗡鸣。镜子敲击：340Hz玻璃泛音。
+      </div>
+      <div class="card-body-en en-text">
+        Item pickup: 55Hz deep echo. Examine: 220Hz+330Hz harmonic chord. Glass smash: real recorded sample. Buddha retrieval: 55Hz low base + dissonant harmonics + multi-delay reverb — eerie drone. Mirror tap: 340Hz glass harmonics.
+      </div>
+    </div>
+  </div>
+
+  <!-- Sound Cards -->
+  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:0.8rem; margin-top:1rem;">
+    <div class="sound-card">
+      <div class="sound-icon">&#9835;</div>
+      <div class="sound-info">
+        <div class="sound-name-zh zh-text">道具拾取</div>
+        <div class="sound-name-en en-text">Item Pickup</div>
+        <div class="sound-desc">55Hz deep echo, 4-layer decay</div>
+      </div>
+    </div>
+    <div class="sound-card">
+      <div class="sound-icon">&#9834;</div>
+      <div class="sound-info">
+        <div class="sound-name-zh zh-text">环境查看</div>
+        <div class="sound-name-en en-text">Examine</div>
+        <div class="sound-desc">220Hz + 330Hz fifth harmonic</div>
+      </div>
+    </div>
+    <div class="sound-card">
+      <div class="sound-icon">&#9833;</div>
+      <div class="sound-info">
+        <div class="sound-name-zh zh-text">玻璃碎裂</div>
+        <div class="sound-name-en en-text">Glass Smash</div>
+        <div class="sound-desc">Real WAV sample (freesound.org)</div>
+      </div>
+    </div>
+    <div class="sound-card">
+      <div class="sound-icon">&#9836;</div>
+      <div class="sound-info">
+        <div class="sound-name-zh zh-text">佛像取出</div>
+        <div class="sound-name-en en-text">Buddha Retrieval</div>
+        <div class="sound-desc">55Hz drone + dissonant harmonics + delay reverb</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wall Gallery -->
+  <div style="margin-top:3rem;">
+    <div class="card-label zh-only" style="text-align:center;">空间设计</div>
+    <div class="card-label en-only" style="text-align:center;">SPACE DESIGN</div>
+    <div style="font-family:var(--font-zh); text-align:center; font-size:1.3rem; color:var(--accent-gold); margin-bottom:0.3rem;" class="zh-text">四面墙，一面地</div>
+    <div style="font-family:var(--font-en); text-align:center; font-size:0.9rem; color:var(--text-muted-en); margin-bottom:1.5rem;" class="en-text">Four Walls, One Floor</div>
+
+    <div class="wall-gallery">
+      <div class="wall-item">
+        <img src="art/东-佛龛1.png" alt="East Shrine">
+        <div class="wall-label"><div class="wall-label-zh zh-text">东·木·佛龛</div><div class="wall-label-en en-text">East · Wood · Shrine</div></div>
+      </div>
+      <div class="wall-item">
+        <img src="art/南-屏风书桌1.png" alt="South Desk">
+        <div class="wall-label"><div class="wall-label-zh zh-text">南·火·屏风书桌</div><div class="wall-label-en en-text">South · Fire · Screen & Desk</div></div>
+      </div>
+      <div class="wall-item">
+        <img src="art/西-镜子1.PNG" alt="West Mirror">
+        <div class="wall-label"><div class="wall-label-zh zh-text">西·金·梳妆台镜子</div><div class="wall-label-en en-text">West · Metal · Vanity & Mirror</div></div>
+      </div>
+      <div class="wall-item">
+        <img src="art/北-鱼1.PNG" alt="North Fish Tank">
+        <div class="wall-label"><div class="wall-label-zh zh-text">北·水·鱼缸</div><div class="wall-label-en en-text">North · Water · Fish Tank</div></div>
+      </div>
+      <div class="wall-item">
+        <img src="art/地-八卦1.png" alt="Floor Bagua">
+        <div class="wall-label"><div class="wall-label-zh zh-text">地·土·八卦盘</div><div class="wall-label-en en-text">Floor · Earth · Bagua Plate</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mirror Shattering Gallery -->
+  <div style="margin-top:2rem;">
+    <div class="card-label zh-only" style="text-align:center;">镜子碎裂四阶段</div>
+    <div class="card-label en-only" style="text-align:center;">MIRROR SHATTERING — 4 STAGES</div>
+    <div class="wall-gallery">
+      <div class="wall-item">
+        <img src="art/西-镜子1.PNG" alt="Mirror intact">
+        <div class="wall-label"><div class="wall-label-zh zh-text">完整</div><div class="wall-label-en en-text">Intact</div></div>
+      </div>
+      <div class="wall-item">
+        <img src="art/西-镜子2.PNG" alt="Mirror cracked">
+        <div class="wall-label"><div class="wall-label-zh zh-text">裂痕</div><div class="wall-label-en en-text">Cracked</div></div>
+      </div>
+      <div class="wall-item">
+        <img src="art/西-镜子3.PNG" alt="Mirror shattered Buddha visible">
+        <div class="wall-label"><div class="wall-label-zh zh-text">碎裂·佛像露出</div><div class="wall-label-en en-text">Shattered · Buddha Revealed</div></div>
+      </div>
+      <div class="wall-item">
+        <img src="art/西-镜子4.PNG" alt="Mirror empty">
+        <div class="wall-label"><div class="wall-label-zh zh-text">空壳</div><div class="wall-label-en en-text">Empty Shell</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cultural Layers -->
+  <div class="card-grid" style="margin-top:3rem;">
+    <div class="card">
+      <div class="card-label zh-only">文化层次</div><div class="card-label en-only">CULTURAL LAYERS</div>
+      <div class="card-title-zh zh-text">五行·风水·民俗恐怖</div>
+      <div class="card-title-en en-text">Five Elements · Feng Shui · Folk Horror</div>
+      <div class="card-body-zh zh-text">
+        <strong>五行相克</strong>：金克木，木克土，土克水，水克火，火克金。这个循环构成了房间的秩序表面。<br>
+        <strong>风水冲突</strong>：镜子对着佛龛——看似合理的五行排列，暗藏违和。荒谬就藏在秩序底下。<br>
+        <strong>民俗恐怖</strong>：角落闪过的暗影、镜子深处藏着佛像、喂鱼时水面变色的那一刻——恐怖不在鬼怪本身，在于"不该出现的东西出现在了秩序里"。
+      </div>
+      <div class="card-body-en en-text">
+        <strong>Five-Element Cycle</strong>: Metal overcomes Wood, Wood overcomes Earth, Earth overcomes Water, Water overcomes Fire, Fire overcomes Metal. This cycle forms the room's orderly surface.<br>
+        <strong>Feng Shui Conflict</strong>: The mirror faces the shrine — a seemingly proper arrangement harbors disharmony. Absurdity hides beneath order.<br>
+        <strong>Folk Horror</strong>: Shadows flashing in corners, a Buddha statue hidden deep inside a mirror, the moment the water changes color when you feed the fish — horror is not the ghost itself, but "something that shouldn't be here, appearing within order."
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label zh-only">叙事设计</div><div class="card-label en-only">NARRATIVE DESIGN</div>
+      <div class="card-title-zh zh-text">从秩序到安宁</div>
+      <div class="card-title-en en-text">From Order to Peace</div>
+      <div class="card-body-zh zh-text">
+        叙事不是线性讲述，而是通过空间和互动自然展开。玩家一开始会觉得房间井然有序——直到发现佛像藏在镜子里、角落闪过暗影、风水暗中冲突。这些荒谬的细节在秩序的缝隙里生长成恐怖。当他们把一切归位后，恐怖消退，安宁浮现。<br><br>
+        环境文字碎片（"海纳百川""黄历""空"）在秩序的表面下暗示着失衡。
+      </div>
+      <div class="card-body-en en-text">
+        The narrative unfolds through space and interaction, not linear storytelling. Players first feel the room is orderly — until they discover the Buddha hidden inside a mirror, shadows in corners, feng shui secretly clashing. These absurd details grow into horror within the cracks of order. When everything is restored, horror fades and peace emerges.<br><br>
+        Environmental text fragments ("The sea embraces all rivers," "Almanac," "Empty") hint at imbalance beneath the surface of order.
+      </div>
+    </div>
+  </div>
+
+  <!-- 7 Items -->
+  <div class="card" style="margin-top:2rem;">
+    <div class="card-label zh-only">七个道具</div><div class="card-label en-only">7 ITEMS</div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:0.8rem; text-align:center; margin-top:1rem;">
+      <div>
+        <div style="font-family:var(--font-zh); color:var(--text-light); font-size:0.9rem;" class="zh-text">打火机</div>
+        <div style="font-family:var(--font-ui); color:var(--text-muted-en); font-size:0.7rem;" class="en-text">Lighter</div>
+        <div style="font-size:0.7rem; color:var(--text-dim); margin-top:0.2rem;">南墙书桌</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-zh); color:var(--text-light); font-size:0.9rem;" class="zh-text">榔头</div>
+        <div style="font-family:var(--font-ui); color:var(--text-muted-en); font-size:0.7rem;" class="en-text">Mallet</div>
+        <div style="font-size:0.7rem; color:var(--text-dim); margin-top:0.2rem;">北墙鱼缸下</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-zh); color:var(--text-light); font-size:0.9rem;" class="zh-text">香灰</div>
+        <div style="font-family:var(--font-ui); color:var(--text-muted-en); font-size:0.7rem;" class="en-text">Incense Ash</div>
+        <div style="font-size:0.7rem; color:var(--text-dim); margin-top:0.2rem;">东墙佛龛</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-zh); color:var(--text-light); font-size:0.9rem;" class="zh-text">符纸</div>
+        <div style="font-family:var(--font-ui); color:var(--text-muted-en); font-size:0.7rem;" class="en-text">Charm</div>
+        <div style="font-size:0.7rem; color:var(--text-dim); margin-top:0.2rem;">东墙佛龛侧</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-zh); color:var(--text-light); font-size:0.9rem;" class="zh-text">半月杯</div>
+        <div style="font-family:var(--font-ui); color:var(--text-muted-en); font-size:0.7rem;" class="en-text">Half-Moon Cup</div>
+        <div style="font-size:0.7rem; color:var(--text-dim); margin-top:0.2rem;">地墙</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-zh); color:var(--text-light); font-size:0.9rem;" class="zh-text">相片</div>
+        <div style="font-family:var(--font-ui); color:var(--text-muted-en); font-size:0.7rem;" class="en-text">Photo</div>
+        <div style="font-size:0.7rem; color:var(--text-dim); margin-top:0.2rem;">西墙梳妆台</div>
+      </div>
+      <div>
+        <div style="font-family:var(--font-zh); color:var(--text-light); font-size:0.9rem;" class="zh-text">佛像</div>
+        <div style="font-family:var(--font-ui); color:var(--text-muted-en); font-size:0.7rem;" class="en-text">Buddha Statue</div>
+        <div style="font-size:0.7rem; color:var(--text-dim); margin-top:0.2rem;">西墙碎镜后</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ DEVELOPMENT ═══════════════ -->
+<section class="section fade-section" id="dev">
+  <div class="section-divider"></div>
+  <div class="section-title-zh zh-text">开发</div>
+  <div class="section-title-en en-text">DEVELOPMENT</div>
+
+  <div class="card" style="margin-bottom:2rem;">
+    <div class="card-label zh-only">人机协作</div><div class="card-label en-only">HUMAN-AI CO-CREATION</div>
+    <div class="card-title-zh zh-text">与 WorkBuddy（Claude）协作开发</div>
+    <div class="card-title-en en-text">Co-Developed with WorkBuddy (Claude)</div>
+    <div class="card-body-zh zh-text">
+      整个游戏的开发过程由人类设计师提出概念、绘制美术、定义交互，AI 代理负责代码实现、bug 修复、迭代优化。以下是开发过程中的关键节点。
+    </div>
+    <div class="card-body-en en-text">
+      The entire development was driven by the human designer providing concepts, art, and interaction specs, while the AI agent handled code implementation, bug fixes, and iterative optimization. Below are key milestones.
+    </div>
+  </div>
+
+  <div class="timeline">
+    <!-- I01 -->
+    <div class="timeline-item">
+      <div class="timeline-date">2026-06-16</div>
+      <div class="timeline-title-zh zh-text">项目发现与初始审计</div>
+      <div class="timeline-title-en en-text">Project Discovery & Initial Audit</div>
+      <div class="timeline-tag">READ-ONLY</div>
+      <div class="timeline-body zh-text">AI 首次读取项目，识别 Tuanjie Engine 1.6.11 环境，审计所有脚本和美术资产，产出结构化状态报告。发现南墙和北墙缺失美术。</div>
+      <div class="timeline-body-en en-text">AI first read the project, identified Tuanjie Engine 1.6.11, audited all scripts and art assets, produced a structured status report. Found South and North walls missing art.</div>
+    </div>
+
+    <!-- I02 -->
+    <div class="timeline-item">
+      <div class="timeline-date">2026-06-18</div>
+      <div class="timeline-title-zh zh-text">协作框架建立</div>
+      <div class="timeline-title-en en-text">Collaboration Framework Setup</div>
+      <div class="timeline-tag">DOCUMENTATION</div>
+      <div class="timeline-body zh-text">建立 agent-development-log.md，定义两种日志类型（原始交互记录 + 反思记录），确立诚实记录原则。</div>
+      <div class="timeline-body-en en-text">Created agent-development-log.md, defined two log types (Raw Interaction + Reflection), established honest documentation principles.</div>
+    </div>
+
+    <!-- I03 -->
+    <div class="timeline-item">
+      <div class="timeline-date">2026-06-18</div>
+      <div class="timeline-title-zh zh-text">美术整合 & 核心交互实现</div>
+      <div class="timeline-title-en en-text">Art Integration & Core Interaction Implementation</div>
+      <div class="timeline-tag">CODE</div>
+      <div class="timeline-tag">REWRITE</div>
+      <div class="timeline-body zh-text">整合手绘美术资产到游戏，实现完整交互链：打火机→点香→砸镜子→取佛像→归还佛像。确立风水冲突叙事：镜子对着佛龛。</div>
+      <div class="timeline-body-en en-text">Integrated hand-drawn art assets, implemented full interaction chain: lighter → light incense → smash mirror → retrieve Buddha → return Buddha. Established feng shui conflict narrative: mirror facing shrine.</div>
+    </div>
+
+    <!-- I04 -->
+    <div class="timeline-item">
+      <div class="timeline-date">2026-06-18</div>
+      <div class="timeline-title-zh zh-text">Bug 修复：编译错误 & 交互失效</div>
+      <div class="timeline-title-en en-text">Bug Fix: Compilation & Interaction Failure</div>
+      <div class="timeline-tag">BUG</div>
+      <div class="timeline-body zh-text">修复 3 个编译错误。UI 可见但无法交互——诊断出 roomImage.raycastTarget 拦截了所有点击，导航按钮锚点错位，透明面板拦截事件。</div>
+      <div class="timeline-body-en en-text">Fixed 3 compilation errors. UI visible but unclickable — diagnosed roomImage.raycastTarget intercepting all clicks, nav button anchors mispositioned, transparent panels blocking events.</div>
+    </div>
+
+    <!-- I05 -->
+    <div class="timeline-item">
+      <div class="timeline-date">2026-06-19</div>
+      <div class="timeline-title-zh zh-text">完全重写输入系统 & 音频重设计</div>
+      <div class="timeline-title-en en-text">Input System Rewrite & Audio Redesign</div>
+      <div class="timeline-tag">REWRITE</div>
+      <div class="timeline-tag">AUDIO</div>
+      <div class="timeline-body zh-text">EventSystem 不可靠，改为手动鼠标检测系统。音频从简单 40Hz 正弦波改为 55Hz 低频回响（4层衰减）。</div>
+      <div class="timeline-body-en en-text">EventSystem unreliable — replaced with manual mouse detection. Audio redesigned from simple 40Hz sine to 55Hz deep echo with 4-layer decay.</div>
+    </div>
+
+    <!-- I06 -->
+    <div class="timeline-item">
+      <div class="timeline-date">2026-06-19</div>
+      <div class="timeline-title-zh zh-text">精简至最小可行壳</div>
+      <div class="timeline-title-en en-text">Stripped to Minimum Viable Shell</div>
+      <div class="timeline-tag">REWRITE</div>
+      <div class="timeline-body zh-text">从 1346 行精简至 373 行。只保留导航按钮和背景图切换，作为增量重建的干净起点。</div>
+      <div class="timeline-body-en en-text">Reduced from 1346 to 373 lines. Kept only nav buttons and background switching as a clean base for incremental rebuilding.</div>
+    </div>
+
+    <!-- I08 -->
+    <div class="timeline-item">
+      <div class="timeline-date">2026-06-21</div>
+      <div class="timeline-title-zh zh-text">修复 Play Mode 崩溃 & 黑屏</div>
+      <div class="timeline-title-en en-text">Fix Play Mode Crash & Black Screen</div>
+      <div class="timeline-tag">BUG</div>
+      <div class="timeline-body zh-text">DemoSceneBuilder 的 [InitializeOnLoadMethod] 在 Play Mode 触发 EditorSceneManager.SaveScene 导致崩溃。添加 Play Mode 保护。</div>
+      <div class="timeline-body-en en-text">DemoSceneBuilder's [InitializeOnLoadMethod] fired EditorSceneManager.SaveScene during Play Mode causing crash. Added Play Mode guards.</div>
+    </div>
+
+    <!-- Recent -->
+    <div class="timeline-item">
+      <div class="timeline-date">2026-06-21–23</div>
+      <div class="timeline-title-zh zh-text">交互迭代高峰</div>
+      <div class="timeline-title-en en-text">Interaction Iteration Peak</div>
+      <div class="timeline-tag">UX</div>
+      <div class="timeline-tag">AUDIO</div>
+      <div class="timeline-tag">HORROR</div>
+      <div class="timeline-body zh-text">
+        环境文字互动系统（9个鱼缸热点 + 7个佛龛热点）。佛龛近距离查看模式。镜子砸碎改为榔头专用（2次砸碎→点击取佛像）。真实玻璃碎裂采样音效。佛像叠加层（半透明+颜色加深+Additive暖光）。鬼影闪现（鱼缸门里暗影佛像，首次点击触发一次）。墙面转场动画（伪3D转头效果）。双语翻译系统。游戏开始界面。
+      </div>
+      <div class="timeline-body-en en-text">
+        Environmental text system (9 fish tank + 7 shrine hotspots). Shrine close-up/inspection mode. Mirror smash requires mallet (2 hits → click to retrieve Buddha). Real glass smash audio sample. Buddha overlay (semi-transparent + color-deepened + additive warm glow). Ghost flash horror (shadow Buddha in fish tank door area, one-time trigger on first click). Wall transition animation (pseudo-3D head-turn effect). Bilingual translation system. Game start screen.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <p class="footer-zh zh-text">归位 · 五行密室解谜 — Raine — 2026</p>
+  <p class="footer-en en-text">Guiwei · Five Elements Chamber — Raine — 2026</p>
+</footer>
+
+<!-- ═══════════════ JS ═══════════════ -->
+<script>
+// Language toggle
+const btnZh = document.getElementById('btnZh');
+const btnEn = document.getElementById('btnEn');
+
+btnZh.addEventListener('click', () => {
+  document.body.classList.remove('lang-en');
+  document.body.classList.add('lang-zh');
+  btnZh.classList.add('active');
+  btnEn.classList.remove('active');
+});
+
+btnEn.addEventListener('click', () => {
+  document.body.classList.remove('lang-zh');
+  document.body.classList.add('lang-en');
+  btnEn.classList.add('active');
+  btnZh.classList.remove('active');
+});
+
+// Scroll fade-in
+const fadeSections = document.querySelectorAll('.fade-section');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+fadeSections.forEach(s => observer.observe(s));
+
+// Smooth scroll for nav
+document.querySelectorAll('nav a').forEach(a => {
+  a.addEventListener('click', (e) => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+
+</body>
+</html>

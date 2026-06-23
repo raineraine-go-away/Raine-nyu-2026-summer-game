@@ -66,6 +66,9 @@
     <Compile Include="Assets/CubeWuweiDemo/Scripts/CubeDemoGame.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets/CubeWuweiDemo/Shaders/UIAdditiveGlow.shader" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="UnityEngine">
       <HintPath>/Applications/Tuanjie/Hub/Editor/2022.3.61t12/Tuanjie.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
       <Private>False</Private>
@@ -415,7 +418,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Codely.Newtonsoft.Json">
-      <HintPath>Library/PackageCache/cn.tuanjie.codely.bridge@1.0.60/Plugins/Codely.Newtonsoft.Json.dll</HintPath>
+      <HintPath>Library/PackageCache/cn.tuanjie.codely.bridge@1.0.63/Plugins/Codely.Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
